@@ -17,4 +17,4 @@ Welcome to my SQL practice journey! This repository is dedicated to mastering My
 | Week 2 | Data Cleaning & String Manipulation | ⏳ Upcoming |
 
 ## 🔗 Connect with Me
-[Insert your LinkedIn Profile Link Here]
+[['MY LinkedIN Profile🔗'](https://www.linkedin.com/in/sourav-kumar-sahu-400408229/)]
