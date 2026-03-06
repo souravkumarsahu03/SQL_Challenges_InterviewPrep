@@ -42,40 +42,49 @@ INSERT INTO employees (name, department, salary, hire_date) VALUES
 ('Sanskar', 'Testing',      75000, '2022-03-22');
 
 SELECT * FROM employees;
-
 -- ---------------------------------------------------------
 -- 1) ROW_NUMBER(): unique sequence within each department
 -- ---------------------------------------------------------
-
-
-
+SELECT name, department, salary,
+ROW_NUMBER() OVER(PARTITION BY department ORDER BY salary DESC) AS row_num_tab
+FROM employees;    
 -- Duplicates are not allowed in ROW_NUMBER()
 
 
 ---------------------------------------------------------
 -- 2) RANK(): ranks with gaps on ties (1,1,3)
 -- ---------------------------------------------------------
-
-
+SELECT name, department, salary,
+RANK() OVER(PARTITION BY department ORDER BY salary DESC) AS rank_data
+FROM employees;
 
 -- ---------------------------------------------------------
 -- 3) DENSE_RANK(): ranks without gaps on ties (1,1,2)
 -- ---------------------------------------------------------
+SELECT name, department, salary,
+DENSE_RANK() OVER(PARTITION BY department ORDER BY salary DESC) AS denserank_data
+FROM employees;
 
 -- ---------------------------------------------------------
 -- 4) NTILE(3): split each department into 3 buckets by salary
 -- ---------------------------------------------------------
-
+SELECT name, department, salary,
+NTILE(3) OVER(PARTITION BY department ORDER BY salary DESC) AS denserank_data
+FROM employees;
 
 -- ---------------------------------------------------------
 -- 5) LAG(): previous row's salary by hire_date in each department
 -- ---------------------------------------------------------
-
+SELECT name, department, salary,hire_date,
+LAG(salary, 1) OVER(PARTITION BY department ORDER BY hire_date) AS prev_salary
+FROM employees;
 
 -- ---------------------------------------------------------
 -- 6) LEAD(): next row's salary by hire_date in each department
 -- ---------------------------------------------------------
-
+SELECT name, department, salary,hire_date,
+LEAD(salary,1) OVER(PARTITION BY department ORDER BY hire_date) AS denserank_data
+FROM employees;
 
 -- ---------------------------------------------------------
 -- 7) FIRST_VALUE(): earliest hire's salary in each department
@@ -92,10 +101,10 @@ SELECT * FROM employees;
 -- 9) SUM() OVER: running total of salaries by hire_date per dept
 -- ---------------------------------------------------------
 
+
 -- ---------------------------------------------------------
 -- 10) AVG() OVER: department average salary on every row
 -- ---------------------------------------------------------
-
 
 
 -- ---------------------------------------------------------
@@ -111,3 +120,4 @@ SELECT * FROM employees;
 --     Fraction of rows in the partition with value >= current
 --     (because we ORDER BY salary DESC)
 -- ---------------------------------------------------------
+
